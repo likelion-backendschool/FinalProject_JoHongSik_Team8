@@ -1,0 +1,23 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+
+
+<div th:text="${member.nickname}+'님 안녕하세요'"></div>
+<form method="POST" th:action="@{' '}">
+    <div class="btn btn-danger" th:if="${member.nickname} == '' or ${member.nickname} == null" onclick="showForm();">닉네임 추가하고 작가되기</div>
+    <input type="text" placeholder="원하시는 닉네임을 입력해주세요." style="display: none" class="nickname" name="nickname">
+    <input type="submit" class="submit" style="display: none" value="등록하기">
+</form>
+    <script>
+        function showForm(){
+            $('.nickname').css({
+                'display': 'block'
+            });
+            $('.submit').css({
+                'display': 'block'
+            });
+
+        }
+    </script>
+</div>
+</html>

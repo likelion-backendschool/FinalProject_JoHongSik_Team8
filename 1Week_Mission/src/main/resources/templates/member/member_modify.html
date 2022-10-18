@@ -1,0 +1,26 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+<form method="POST" th:action="@{' '}" th:object="${memberModifyDto}">
+    <div class="form">
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+        </div>
+
+        <label for="nickname">닉네임</label>
+        <input type="text" id="nickname" th:field="*{nickname}" th:value="${memberModifyDto.getNickname()}">
+        <div th:if="${#fields.hasErrors('nickname')}" th:errorclass="field-error" th:errors="*{nickname}">
+            사용자ID 오류
+        </div>
+
+        <label for="email">이메일</label>
+        <input type="text" id="email" th:field="*{email}" th:value="${memberModifyDto.getEmail()}">
+        <div th:if="${#fields.hasErrors('email')}" th:errorclass="field-error" th:errors="*{email}">
+            사용자ID 오류
+        </div>
+
+        <input type="submit" value="회원가입" >
+    </div>
+</form>
+</div>
+
+</html>
