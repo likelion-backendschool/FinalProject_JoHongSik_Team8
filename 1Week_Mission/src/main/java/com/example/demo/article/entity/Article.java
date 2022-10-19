@@ -1,13 +1,19 @@
 package com.example.demo.article.entity;
 
+import com.example.demo.articleAndContent.entity.ArticleAndContent;
 import com.example.demo.base.BaseEntity;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Article extends BaseEntity {
 
     @Id @GeneratedValue
@@ -15,4 +21,7 @@ public class Article extends BaseEntity {
 
     @Column(nullable = false , unique = true)
     private String name;
+
+    @OneToMany(mappedBy = "article")
+    private List<ArticleAndContent> articleAndContentList = new ArrayList<>();
 }

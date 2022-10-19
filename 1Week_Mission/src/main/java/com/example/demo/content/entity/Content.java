@@ -1,10 +1,13 @@
 package com.example.demo.content.entity;
 
+import com.example.demo.articleAndContent.entity.ArticleAndContent;
 import com.example.demo.base.BaseEntity;
 import com.example.demo.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Setter
@@ -29,6 +32,9 @@ public class Content extends BaseEntity {
 
     @Column
     private String ContentHtml;
+
+    @OneToMany(mappedBy = "content")
+    private List<ArticleAndContent> articleAndContentList = new ArrayList<>();
 
 
 
