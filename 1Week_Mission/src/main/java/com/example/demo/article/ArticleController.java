@@ -39,8 +39,8 @@ public class ArticleController {
             bindingResult.rejectValue("article", "duplicated", "이미 있는 해시태그입니다.");
             return "article/article_create";
         }
-        return "redirect:/article/list";
 
+        return "redirect:/article/list";
 
     }
 
