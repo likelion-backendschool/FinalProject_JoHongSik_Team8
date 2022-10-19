@@ -14,5 +14,5 @@ public class ContentDto {
     private String content;
 
     @NotEmpty(message = "해시태그는 필수 입니다.")
-    private String articleName;
+    private String articleId;
 }

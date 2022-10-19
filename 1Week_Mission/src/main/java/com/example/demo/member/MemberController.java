@@ -2,6 +2,7 @@ package com.example.demo.member;
 
 
 import com.example.demo.mail.MailService;
+import com.example.demo.member.dto.MemberAddDto;
 import com.example.demo.member.dto.MemberModifyDto;
 import com.example.demo.member.dto.MemberSignUpDto;
 import com.example.demo.member.entity.Member;
@@ -93,7 +94,7 @@ public class MemberController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile")
-    public String showProfile(Principal principal, Model model){
+    public String showProfile(Principal principal, Model model,MemberAddDto memberAddDto){
         Member member = memberService.findByUsername(principal.getName());
         model.addAttribute("member",member);
 
@@ -102,13 +103,18 @@ public class MemberController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/profile")
-    public String updateNickname(@Validated String nickname, BindingResult bindingResult, Principal principal, Model model){
-        boolean validNickname = memberService.checkNicknameValidation(nickname);
+    public String updateNickname(@Validated MemberAddDto memberAddDto, BindingResult bindingResult , Principal principal, Model model){
+        if(bindingResult.hasErrors()){
+            Member member = memberService.findByUsername(principal.getName());
+            model.addAttribute("member",member);
+            return"member/member_profile";
+        }
+        boolean validNickname = memberService.checkNicknameValidation(memberAddDto.getNickname());
         if(validNickname){
             bindingResult.rejectValue("nickname","duplicated","이미 존재하는 닉네임입니다.");
             return "member/member_profile";
         }
-        memberService.updateNickname(principal.getName(),nickname);
+        memberService.updateNickname(principal.getName(),memberAddDto.getNickname());
 
         return "redirect:/member/profile";
     }

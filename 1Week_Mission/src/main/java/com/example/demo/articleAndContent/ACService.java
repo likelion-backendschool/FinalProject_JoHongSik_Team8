@@ -8,22 +8,25 @@ import com.example.demo.content.entity.Content;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ACService {
 
-    private final ContentService contentService;
-    private final ArticleService articleService;
     private final ACRepository acRepository;
 
-    public void save(Long id, String articleName) {
-        Article article = articleService.findById(articleName);
-        Content content = contentService.findByContentId(id);
+
+    public void save(Content content, Article article) {
         acRepository.save(
                 ArticleAndContent.builder()
                         .article(article)
                         .content(content)
                         .build()
         );
+    }
+
+    public List<ArticleAndContent> findAllByArticle(Article article) {
+            return acRepository.findAllByArticle(article);
     }
 }

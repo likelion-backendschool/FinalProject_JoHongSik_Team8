@@ -3,6 +3,7 @@ package com.example.demo.content;
 import com.example.demo.article.ArticleService;
 import com.example.demo.article.entity.Article;
 import com.example.demo.articleAndContent.ACService;
+import com.example.demo.articleAndContent.entity.ArticleAndContent;
 import com.example.demo.content.dto.ContentDto;
 import com.example.demo.content.entity.Content;
 import com.example.demo.member.MemberService;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,8 +43,9 @@ public class ContentService {
                             .Content(contentDto.getContent())
                             .build();
         contentRepository.save(content);
-
-        acService.save(content.getId(),contentDto.getArticleName());
+        Content content1 = contentRepository.findById(content.getId()).orElse(null);
+        Article article = articleService.findById(contentDto.getArticleId());
+        acService.save(content1,article);
 
         return content.getId();
     }
@@ -53,5 +56,21 @@ public class ContentService {
 
     public List<Article> getAllArticle() {
         return articleService.findAll();
+    }
+
+    public List<Content> findAll() {
+        return contentRepository.findAll();
+    }
+
+    public List<Content> findAllContentById(String id) {
+        Article article = articleService.findById(id);
+        List<ArticleAndContent> ac = acService.findAllByArticle(article);
+        List<Content> contentList = new ArrayList<>();
+
+        for(ArticleAndContent a : ac){
+            contentList.add(a.getContent());
+            System.out.println(contentList);
+        }
+        return contentList;
     }
 }

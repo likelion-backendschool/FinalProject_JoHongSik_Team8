@@ -28,6 +28,8 @@ public class ArticleService {
     }
 
     public Article findById(String articleId) {
-        return articleRepository.findByName(articleId);
+        return articleRepository.findById(Long.valueOf(articleId)).orElse(null);
     }
+
+
 }
