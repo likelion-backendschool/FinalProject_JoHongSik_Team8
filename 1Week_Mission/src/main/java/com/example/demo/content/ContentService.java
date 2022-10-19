@@ -2,6 +2,7 @@ package com.example.demo.content;
 
 import com.example.demo.article.ArticleService;
 import com.example.demo.article.entity.Article;
+import com.example.demo.articleAndContent.ACService;
 import com.example.demo.content.dto.ContentDto;
 import com.example.demo.content.entity.Content;
 import com.example.demo.member.MemberService;
@@ -17,6 +18,8 @@ import java.util.List;
 public class ContentService {
     private final MemberService memberService;
     private final ContentRepository contentRepository;
+
+    private final ACService acService;
 
     private final ArticleService articleService;
 
@@ -38,6 +41,9 @@ public class ContentService {
                             .Content(contentDto.getContent())
                             .build();
         contentRepository.save(content);
+
+        acService.save(content.getId(),contentDto.getArticleName());
+
         return content.getId();
     }
 

@@ -35,6 +35,8 @@ public class ContentController {
             model.addAttribute("articles",articleList);
             return "content/content_create";
         }
+
+
         Long id = contentService.save(contentDto,principal);
         return "redirect:/content/detail/%d".formatted(id);
     }
