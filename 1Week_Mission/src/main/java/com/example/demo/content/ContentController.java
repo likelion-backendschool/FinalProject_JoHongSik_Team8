@@ -1,5 +1,6 @@
 package com.example.demo.content;
 
+import com.example.demo.article.entity.Article;
 import com.example.demo.content.dto.ContentDto;
 import com.example.demo.content.entity.Content;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/content")
@@ -19,23 +21,19 @@ public class ContentController {
         private final ContentService contentService;
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/new")
-    public String showCreateContent(ContentDto contentDto,Principal principal){
-        boolean checkAuthor = contentService.checkAuthor(principal.getName());
-        if(checkAuthor){
-            return "redirect:/";
-        }
+    public String showCreateContent(ContentDto contentDto,Model model){
+        List<Article> articleList = contentService.getAllArticle();
+        model.addAttribute("articles",articleList);
         return "content/content_create";
     }
 
     @PostMapping("/new")
     @PreAuthorize("isAuthenticated()")
-    public String save(@Validated ContentDto contentDto, BindingResult bindingResult,Principal principal){
+    public String save(@Validated ContentDto contentDto, BindingResult bindingResult,Principal principal,Model model){
         if(bindingResult.hasErrors()){
+            List<Article> articleList = contentService.getAllArticle();
+            model.addAttribute("articles",articleList);
             return "content/content_create";
-        }
-        boolean checkAuthor = contentService.checkAuthor(principal.getName());
-        if(checkAuthor){
-            return "redirect:/";
         }
         Long id = contentService.save(contentDto,principal);
         return "redirect:/content/detail/%d".formatted(id);
