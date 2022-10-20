@@ -1,0 +1,49 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+
+  <!-- 네비바-->
+  <h2 class="customer-page-name">게시판</h2>
+  <!-- 카테고리 바 -->
+  <form th:action method="post">
+    <ul class="list-group list-group-horizontal btn-group category">
+      <!-- 기본 카테고리를 링크를 걸어놓고 만들면  -->
+
+      <div th:each="article : ${articleList}">
+        <input  type="hidden" th:id="${article.getId()}" name="categoryId" th:value="${article.getId()}">
+        <li th:text="${article.name}" name="category" th:value="${article.getId()}" class="list-group-item btn btn-primary hashtag" style=" cursor: pointer;" th:id="${article.getId()}" >
+          카테고리명
+        </li>
+
+      </div>
+    </ul>
+  </form>
+
+  <!-- 새롭게 추가한 메뉴판 -->
+  <div th:each="content : ${contentList}" class="customer-menu-box">
+    <div class="customer-menu-box__info"  >
+      <div class="customer-menu-info">
+        <div class="read" style="font-size: 15px" th:text="${content.subject}"></div>
+      </div>
+    </div>
+  </div>
+<script>
+  $(".hashtag").click(function() {
+  $.ajax({
+  type : "POST",
+  url : "/content/targetContent",
+  data : {
+    "findId" : $(".hashtag").val()},
+  success : function(data){
+  alert(data);
+  }
+  })
+  })
+</script>
+  <script>
+    $(".customer-page-name").click(function (){
+      alert($('.hashtag').val())
+    })
+  </script>
+</div>
+
+</html>
