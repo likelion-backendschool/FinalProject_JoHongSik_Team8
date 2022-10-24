@@ -1,0 +1,22 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+<form method="POST" th:action="@{' '}">
+    <div class="form">
+        <input type="text"  name="username">
+        <input type="password" name="password">
+        <input type="submit" value="로그인">
+
+        <div th:if="${param.error}">
+            <div class="field-error">
+                사용자ID 또는 비밀번호를 확인해 주세요.
+            </div>
+        </div>
+    </div>
+</form>
+<form method="GET" th:action="@{/member/findId}">
+    <div>
+        <input type="submit" value="아이디 찾기">
+    </div>
+</form>
+</div>
+</html>
