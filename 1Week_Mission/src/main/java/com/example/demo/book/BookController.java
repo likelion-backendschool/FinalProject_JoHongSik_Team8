@@ -42,7 +42,7 @@ public class BookController {
 
     @PostMapping("/create")
     @PreAuthorize("isAuthenticated()")
-    public String save(@Validated ProductDto productDto, BindingResult bindingResult, Model model,Principal principal) {
+    public String save(@Validated ProductDto productDto, BindingResult bindingResult, Model model, Principal principal) {
 
         if (bindingResult.hasErrors()) {
             List<Article> articleList = bookService.getAllArticle();
@@ -55,7 +55,6 @@ public class BookController {
     }
 
     @GetMapping("/list")
-    @PreAuthorize("isAuthenticated()")
     public String showProductList(Model model) {
         List<Article> articles = bookService.getAllArticle();
         List<Book> Products = bookService.findAll();
@@ -65,10 +64,10 @@ public class BookController {
     }
 
     @GetMapping("/detail/{id}")
-    @PreAuthorize("isAuthenticated()")
-    public String save(@PathVariable Long id, Model model) {
+    public String save(@PathVariable Long id, Model model,Principal principal) {
         Book book = bookService.findBookById(id);
-        model.addAttribute("book",book);
+        model.addAttribute("book", book);
+        model.addAttribute("principal",principal);
         return "product/product_detail";
     }
 
