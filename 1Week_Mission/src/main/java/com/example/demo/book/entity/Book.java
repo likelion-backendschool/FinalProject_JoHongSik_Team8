@@ -1,5 +1,6 @@
 package com.example.demo.book.entity;
 
+import com.example.demo.article.entity.Article;
 import com.example.demo.base.BaseEntity;
 import com.example.demo.member.entity.Member;
 import lombok.AllArgsConstructor;
@@ -23,9 +24,15 @@ public class Book extends BaseEntity {
     @JoinColumn(name = "AUTHOR_ID")
     private Member member;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ARTICLE_ID")
+    private Article article;
+
     private String subject;
 
-    private Long price;
+    private String price;
+
+
 
 
 }

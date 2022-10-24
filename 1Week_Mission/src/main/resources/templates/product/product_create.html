@@ -1,0 +1,30 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+    <div class="container">
+        <h1>Hello ToastUI</h1>
+        <form class="write_content" method="POST" th:action="@{' '}" th:object="${productDto}" >
+
+            <div class="mb-3">
+                <label class="form-label admin-label-name">해시태그</label>
+                <select name="articleId" class="form-select">
+                    <option value="">==해시태그 선택==</option>
+                    <option th:each="article : ${articles}" th:value="${article.id}" th:text="${article.name}">카테고리옵션</option>
+                </select>
+            </div>
+            <div th:if="${#fields.hasErrors('articleId')}" th:errorclass="field-error" th:errors="*{articleId}">
+                사용자ID 오류
+            </div>
+            <input type="text" name="subject"/>
+            <div th:if="${#fields.hasErrors('subject')}" th:errorclass="field-error" th:errors="*{subject}">
+                사용자ID 오류
+            </div>
+            <input type="text" name="price"th:value="*{price}"/>
+            <div th:if="${#fields.hasErrors('price')}" th:errorclass="field-error" th:errors="*{price}">
+                사용자ID 오류
+            </div>
+            <button class="give btn-danger btn">전송하기</button>
+        </form>
+
+    </div>
+</div>
+</html>

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 
+import static com.example.demo.member.entity.MemberType.AUTHOR;
 import static com.example.demo.member.entity.MemberType.GENERAL;
 
 @Service
@@ -26,7 +27,7 @@ public class MemberService {
                         .username(memberSignUpDto.getUsername())
                         .password(passwordEncoder.encode(memberSignUpDto.getPassword()))
                         .email(memberSignUpDto.getEmail())
-                        .authLevel(3L)
+                        .authLevel(0L)
                         .memberType(GENERAL)
                         .build());
 
@@ -83,6 +84,9 @@ public class MemberService {
     public void updateNickname(String name, String nickname) {
         Member member = memberRepository.findByUsername(name).orElse(null);
         member.setNickname(nickname);
+        member.setMemberType(AUTHOR);
+        member.setAuthLevel(3L);
         memberRepository.save(member);
+
     }
 }
