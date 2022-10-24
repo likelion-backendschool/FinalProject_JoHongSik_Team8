@@ -4,6 +4,7 @@ import com.example.demo.article.ArticleService;
 import com.example.demo.article.entity.Article;
 import com.example.demo.book.entity.Book;
 import com.example.demo.book.entity.ProductDto;
+import com.example.demo.content.entity.Content;
 import com.example.demo.member.MemberRepository;
 import com.example.demo.member.MemberService;
 import com.example.demo.member.entity.Member;
@@ -46,5 +47,13 @@ public class BookService {
 
     public Book findBookById(Long id) {
         return bookRepository.findById(id).orElse(null);
+    }
+
+    public void deleteById(Long id) {
+        bookRepository.deleteById(id);
+    }
+
+    public List<Book> findAll() {
+        return bookRepository.findAll();
     }
 }
