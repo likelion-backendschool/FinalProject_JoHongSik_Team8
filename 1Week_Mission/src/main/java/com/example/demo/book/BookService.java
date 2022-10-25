@@ -56,4 +56,8 @@ public class BookService {
     public List<Book> findAll() {
         return bookRepository.findAll();
     }
+
+    public Member getMemberByUsername(String name) {
+        return memberService.findByUsername(name);
+    }
 }

@@ -4,6 +4,7 @@ import com.example.demo.article.entity.Article;
 import com.example.demo.book.entity.Book;
 import com.example.demo.book.entity.ProductDto;
 import com.example.demo.content.entity.Content;
+import com.example.demo.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -64,10 +65,9 @@ public class BookController {
     }
 
     @GetMapping("/detail/{id}")
-    public String save(@PathVariable Long id, Model model,Principal principal) {
+    public String save(@PathVariable Long id, Model model) {
         Book book = bookService.findBookById(id);
         model.addAttribute("book", book);
-        model.addAttribute("principal",principal);
         return "product/product_detail";
     }
 

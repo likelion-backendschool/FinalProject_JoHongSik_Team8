@@ -1,20 +1,20 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
     <div class="container my-3">
-        <form th:action="@{|product/delete/${book.id}|}">
+        <form name = "Form" th:action="@{|product/delete/${book.id}|}">
             <h2 class="border-bottom py-2" th:text="${book.getMember().nickname}+'님의 도서'"></h2>
             <h2 class="border-bottom py-2" th:text="${book.subject}"></h2>
             <h2 class="border-bottom py-2" th:text="${book.price}"></h2>
 
-            <div class="card my-3">
-                <button th:if="${principal != null or principal.username != null}" class="btn btn-danger">삭제하기</button>
-            </div>
+            <a class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
+               th:if="${book.member != null and #authentication.getPrincipal().getUsername == book.member.username}"
+               onclick="if ( !confirm('장바구니를 수정하시겠습니까?') ) return false;" th:href="@{|/product/delete/${book.id}|}"
+               th:text="삭제"></a>
         </form>
     </div>
 
 
     <!-- 답변의 갯수 표시 -->
-
 
 </div>
 
