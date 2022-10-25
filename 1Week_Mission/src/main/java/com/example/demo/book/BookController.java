@@ -66,7 +66,7 @@ public class BookController {
 
     @GetMapping("/detail/{id}")
     public String save(@PathVariable Long id, Model model) {
-        Book book = bookService.findBookById(id);
+        Book book = bookService.findById(id);
         model.addAttribute("book", book);
         return "product/product_detail";
     }

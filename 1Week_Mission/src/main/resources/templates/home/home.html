@@ -8,6 +8,9 @@
 <a th:href="@{member/login}">로그인</a>
 <a th:href="@{member/signup}">회원가입</a>
 <a th:href="@{content/new}">글쓰기</a>
+<a th:href="@{article/new}">해시태그생성</a>
+<a sec:authorize="isAuthenticated()" th:href="@{member/profile}">프로필</a>
+<a sec:authorize="isAuthenticated()" th:href="@{member/cart}">장바구니로 이동</a>
 <a></a>
 </body>
 </html>

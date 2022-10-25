@@ -45,7 +45,7 @@ public class BookService {
         return book.getId();
     }
 
-    public Book findBookById(Long id) {
+    public Book findById(Long id) {
         return bookRepository.findById(id).orElse(null);
     }
 
@@ -57,7 +57,4 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public Member getMemberByUsername(String name) {
-        return memberService.findByUsername(name);
-    }
 }

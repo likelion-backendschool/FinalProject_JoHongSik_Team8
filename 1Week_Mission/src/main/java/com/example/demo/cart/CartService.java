@@ -8,14 +8,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
-    private final BookService bookService;
+    private final BookRepository bookRepository;
     private final CartRepository cartRepository;
     public void addCart(CartDto cartDto, Principal principal) {
-        Book book = bookService.findBookById(cartDto.getBookId());
+        Book book = bookRepository.findById(cartDto.getBookId()).orElse(null);
         Cart cart = Cart.builder()
                 .book(book)
                 .count(1)
@@ -25,5 +26,9 @@ public class CartService {
 
         cartRepository.save(cart);
 
+    }
+
+    public List<Cart> findAllByUserNickname(String name) {
+        return cartRepository.findALlByUserNickName(name);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.member;
 
 
+import com.example.demo.cart.entity.Cart;
 import com.example.demo.mail.MailService;
 import com.example.demo.member.dto.MemberAddDto;
 import com.example.demo.member.dto.MemberModifyDto;
@@ -16,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/member")
@@ -138,6 +140,14 @@ public class MemberController {
         String code = mailService.sendCertifyMessage(email);
         System.out.println("인증코드 : " + code);
         return code;
+    }
+
+    @GetMapping("/cart")
+    @PreAuthorize("isAuthenticated()")
+    String showMyCart(Principal principal,Model model) throws Exception {
+        List<Cart> carts = memberService.getCartByUsername(principal.getName());
+        model.addAttribute("carts",carts);
+        return "member/member_cart";
     }
 
 }
