@@ -1,0 +1,26 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+    <div class="container my-3">
+        <form method="POST" name = "Form" th:action="@{/cart/add}">
+            <h2 class="border-bottom py-2" th:text="${book.getMember().nickname}+'님의 도서'"></h2>
+            <h2 class="border-bottom py-2" name = "subject" th:text="${book.subject}"></h2>
+            <h2 class="border-bottom py-2" name = "price" th:text="${book.price}"></h2>
+            <input style="display: none" name="bookId" th:value="${book.id}">
+            <input style="display: none" name="subject" th:value="${book.subject}">
+            <input style="display: none" name="price" th:value="${book.price}">
+
+            <a class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
+               th:if="${book.member != null and #authentication.getPrincipal().getUsername == book.member.username}"
+               onclick="if ( !confirm('도서를 삭제하시겠습니까?') ) return false;" th:href="@{|/product/delete/${book.id}|}"
+               th:text="삭제"></a>
+
+            <button class="btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()" onclick="if ( !confirm('장바구니에 추가할까요 ?') ) return false;">장바구니 추가</button>
+        </form>
+    </div>
+
+
+    <!-- 답변의 갯수 표시 -->
+
+</div>
+
+</html>

@@ -1,6 +1,8 @@
 package com.example.demo.member;
 
 
+import com.example.demo.cart.CartService;
+import com.example.demo.cart.entity.Cart;
 import com.example.demo.mail.MailService;
 import com.example.demo.member.dto.MemberModifyDto;
 import com.example.demo.member.dto.MemberSignUpDto;
@@ -10,7 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
 
+import static com.example.demo.member.entity.MemberType.AUTHOR;
 import static com.example.demo.member.entity.MemberType.GENERAL;
 
 @Service
@@ -20,13 +24,14 @@ public class MemberService {
     private final MailService mailService;
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
+    private final CartService cartService;
     public void save(MemberSignUpDto memberSignUpDto) throws Exception {
         memberRepository.save(
                 Member.builder()
                         .username(memberSignUpDto.getUsername())
                         .password(passwordEncoder.encode(memberSignUpDto.getPassword()))
                         .email(memberSignUpDto.getEmail())
-                        .authLevel(3L)
+                        .authLevel(0L)
                         .memberType(GENERAL)
                         .build());
 
@@ -83,6 +88,13 @@ public class MemberService {
     public void updateNickname(String name, String nickname) {
         Member member = memberRepository.findByUsername(name).orElse(null);
         member.setNickname(nickname);
+        member.setMemberType(AUTHOR);
+        member.setAuthLevel(3L);
         memberRepository.save(member);
+
+    }
+
+    public List<Cart> getCartByUsername(String name) {
+        return cartService.findAllByUserNickname(name);
     }
 }
